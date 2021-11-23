@@ -48,7 +48,7 @@ function parseTwitterHeader(text: string) {
 
 function twitterSearch(str: string) {
   roClient.v2.search(str, {
-    max_results: 30
+    max_results: 20
   }).then(res => {
     let modifiedTweets: tweetData[] = []
     res.tweets.forEach(tweet => {
