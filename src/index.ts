@@ -46,10 +46,13 @@ function parseTwitterHeader(text: string) {
   }
 }
 
-function twitterSearch(str: string) {
-  roClient.v2.search(str, {
-    max_results: 20
-  }).then(res => {
+async function twitterSearch(str: string) {
+  roClient.v2.search(str).then(res => {
+
+    for (let i = 0; i < 2; i++) {
+      res.fetchNext()
+    }
+    
     let modifiedTweets: tweetData[] = []
     res.tweets.forEach(tweet => {
       let metadata = parseTwitterHeader(tweet.text)
@@ -75,7 +78,6 @@ function twitterSearch(str: string) {
 
 let refreshTweetCache = new CronJob('0 */12 * * *', () => {
   twitterSearch('valorant giveaway')
-  
 }, null, true)
 
 refreshTweetCache.start()
