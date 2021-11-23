@@ -27,9 +27,11 @@ interface tweetData {
   author: string
   authorUser: string
   publicMetrics: TweetPublicMetricsV2 | undefined,
-  title: string,
-  action: string,
+  title: string
+  action: string
   createdAt: string
+  authorId: string
+  originalAuthor: string
 }
 
 function parseTwitterHeader(text: string) {
@@ -48,14 +50,15 @@ function parseTwitterHeader(text: string) {
 
 async function twitterSearch(str: string) {
   roClient.v2.search(str, {
-    max_results: 100
+    max_results: 100,
+    "tweet.fields": ['author_id', 'public_metrics']
   }).then(async res => {
     for (let i = 0; i < 1; i++) {
       await res.fetchNext()
     }
     
     let modifiedTweets: tweetData[] = []
-    res.tweets.forEach(tweet => {
+    res.tweets.forEach(async tweet => {
       let metadata = parseTwitterHeader(tweet.text)
       let tweetData: tweetData = {
         id: tweet.id,
@@ -66,8 +69,11 @@ async function twitterSearch(str: string) {
         title: metadata.title,
         action: metadata.action,
         publicMetrics: tweet.public_metrics,
-        createdAt: tweet.created_at ? tweet.created_at : 'unknown'
+        createdAt: tweet.created_at ? tweet.created_at : 'unknown',
+        authorId: tweet.author_id ? tweet.author_id : 'unknown',
+        originalAuthor: ''
       }
+
       if (!modifiedTweets.find(tData => tData.authorUser == tweetData.authorUser) || !tweetData.authorUser) {
         modifiedTweets.push(tweetData)
       }
