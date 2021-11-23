@@ -62,8 +62,9 @@ function twitterSearch(str: string) {
         publicMetrics: tweet.public_metrics,
         createdAt: tweet.created_at ? tweet.created_at : 'unknown'
       }
-
-      modifiedTweets.push(tweetData)
+      if (!modifiedTweets.find(tData => tData.authorUser == tweetData.authorUser || tData.title == tweetData.authorUser)) {
+        modifiedTweets.push(tweetData)
+      }
     })
 
     db.set(`twitter_search_${str.replace(' ', '_')}`, modifiedTweets)
