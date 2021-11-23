@@ -1,0 +1,24 @@
+{
+  "name": "twitter-search-server",
+  "version": "1.0.0",
+  "description": "A server that serves twitter stuff for a website",
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc .",
+    "start": "npm run build && node ./dist"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/seen-idc/twitter-search-server.git"
+  },
+  "author": "seen-idc",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/seen-idc/twitter-search-server/issues"
+  },
+  "homepage": "https://github.com/seen-idc/twitter-search-server#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "typescript": "^4.5.2"
+  }
+}
