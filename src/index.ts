@@ -64,7 +64,7 @@ function twitterSearch(str: string) {
         publicMetrics: tweet.public_metrics,
         createdAt: tweet.created_at ? tweet.created_at : 'unknown'
       }
-      if (!modifiedTweets.find(tData => tData.authorUser == tweetData.authorUser || tData.title == tweetData.authorUser)) {
+      if (!modifiedTweets.find(tData => tData.authorUser == tweetData.authorUser || tData.title == tweetData.authorUser) || !tweetData.authorUser) {
         modifiedTweets.push(tweetData)
       }
     })
