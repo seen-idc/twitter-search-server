@@ -47,7 +47,9 @@ function parseTwitterHeader(text: string) {
 }
 
 function twitterSearch(str: string) {
-  roClient.v2.search(str).then(res => {
+  roClient.v2.search(str, {
+    max_results: 30
+  }).then(res => {
     let modifiedTweets: tweetData[] = []
     res.tweets.forEach(tweet => {
       let metadata = parseTwitterHeader(tweet.text)
