@@ -51,7 +51,7 @@ function parseTwitterHeader(text: string) {
 async function twitterSearch(str: string) {
   roClient.v2.search(str, {
     max_results: 100,
-    "tweet.fields": ['author_id', 'public_metrics']
+    'tweet.fields': ['author_id', 'public_metrics']
   }).then(async res => {
     for (let i = 0; i < 1; i++) {
       await res.fetchNext()
@@ -78,7 +78,6 @@ async function twitterSearch(str: string) {
         modifiedTweets.push(tweetData)
       }
     })
-    console.log(modifiedTweets.length)
     db.set(`twitter_search_${str.replace(' ', '_')}`, modifiedTweets)
   })
 }
